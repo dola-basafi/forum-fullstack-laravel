@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::controller(PostController::class)->group(function(){
+  Route::get('/post/index','index');
+  Route::middleware(['auth'])->group(function(){
+    Route::get('/post/create','create')->name('postForm');
+    Route::post('/post/create', 'store')->name('postStore');
+    Route::post('/post/edit',[]);
+  });
+});

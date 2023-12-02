@@ -23,6 +23,19 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
+                @auth                  
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a href="{{ route('postForm') }}" class="nav-link">Buat Postingan</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">Semua Postingan</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">Postingan KU</a>
+                  </li>
+                </ul>
+                @endauth
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
