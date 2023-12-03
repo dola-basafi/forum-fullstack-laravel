@@ -10,8 +10,8 @@
           <a href="#" class="card-link"><i class="bi bi-hand-thumbs-up">like</i></a>
         @endauth
         @guest
-          <i class="bi bi-hand-thumbs-up">
-          @endguest
+          <i class="bi bi-hand-thumbs-up"></i>
+        @endguest
           <span class="ms-2">{{ $data->like_count }}</span>
       </div>
     </div>
