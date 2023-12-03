@@ -14,7 +14,7 @@
         <tbody>
           @foreach ($data as $item)              
           <tr>
-            <th scope="row">1</th>
+            <th scope="row">{{ $loop->index + 1 }}</th>
             <td>{{ $item->title }}</td>
             <td>{{ $item->user->name }}</td>
             <td>

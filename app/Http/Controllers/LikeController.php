@@ -6,5 +6,7 @@ use Illuminate\Http\Request;
 
 class LikeController extends Controller
 {
-    //
+    function setLike($id, Request $request){
+      
+    }
 }

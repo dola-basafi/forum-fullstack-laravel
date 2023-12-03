@@ -31,7 +31,10 @@ Route::prefix('post')->group(function(){
     Route::middleware(['auth'])->group(function(){
       Route::get('/create','create')->name('postForm');
       Route::post('/create', 'store')->name('postStore');
-      Route::post('/edit',[]);
+      Route::get('/mypost','mypost')->name('mypost');
+      Route::get('/edit/{idPost}','edit')->name('editPost');
+      Route::post('/edit/{idPost}','update')->name('updatePost');
+      Route::delete('/delete/{idPost}','destroy')->name('postDelete');
     });
   });
 });
