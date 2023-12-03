@@ -48,13 +48,9 @@ class PostController extends Controller
           $query->where('like', 2); 
       }
   ])->find($id);
-    $data->userLike= Like::where('user_id','=',$request->user()->id)->get();
-    if (!$data->userLike) {
-      $data->userLike = 0;  
-    }
-    // $data->userLike = $request->user()->id;
-    dd($data->userLike);
-    return view('post.detail', compact('data'));
+    $userLike= Like::where('user_id',$request->user()->id)->where('post_id',$id)->first();
+   
+    return view('post.detail', compact('data','userLike'));
   }
   function index()
   {
@@ -96,7 +92,6 @@ class PostController extends Controller
     ], [
       'required' => ':attribute tidak boleh kosong'
     ]);
-
     $post->update($validate);
     return redirect()->route('postIndex')->with('success', 'berhasil membuat post');
   }

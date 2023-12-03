@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,14 @@ Route::prefix('comment')->group(function(){
   Route::controller(CommentController::class)->group(function(){
     Route::middleware(['auth'])->group(function(){
       Route::post('/create/{idPost}','store')->name('commentStore');
+    });
+  });
+});
+
+Route::prefix('like')->group(function(){
+  Route::controller(LikeController::class)->group(function(){
+    Route::middleware(['auth'])->group(function(){
+      Route::get('/like/{id}/{like}','setLike')->name('like');
     });
   });
 });

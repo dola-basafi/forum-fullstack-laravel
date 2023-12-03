@@ -23,9 +23,9 @@ class LikeSeeder extends Seeder
         'post_id' => 1,
         'like'  => 1
       ],[
-        'user_id' => 2,
+        'user_id' => 3,
         'post_id' => 1,
-        'like'  => 3
+        'like'  => 2
       ]
     ]);
   }
