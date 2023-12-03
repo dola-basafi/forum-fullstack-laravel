@@ -13,11 +13,10 @@ class UserSeeder extends Seeder
    * Run the database seeds.
    */
   public function run(): void
-  {
-    
-   
+  {   
     $data = [
       [
+        'username' => 'admin',
         'name' => 'admin',
         'email' => 'admin@mail.com',
         'address' => 'dago',
@@ -26,6 +25,7 @@ class UserSeeder extends Seeder
         'role' => 1
       ], [
         'name' => 'user',
+        'username' => 'user',
         'email' => 'user@mail.com',
         'address' => 'braga',
         'phone' => '14141',
@@ -33,6 +33,7 @@ class UserSeeder extends Seeder
         'role' => 2
       ], [
         'name' => 'user1',
+        'username' => 'user1',
         'email' => 'user1@mail.com',
         'address' => 'braga',
         'phone' => '141413',
