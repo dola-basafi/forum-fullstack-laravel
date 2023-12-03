@@ -9,6 +9,8 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    {{-- bootstrap icon --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -29,7 +31,7 @@
                     <a href="{{ route('postForm') }}" class="nav-link">Buat Postingan</a>
                   </li>
                   <li class="nav-item">
-                    <a href="#" class="nav-link">Semua Postingan</a>
+                    <a href="{{ route('postIndex') }}" class="nav-link">Semua Postingan</a>
                   </li>
                   <li class="nav-item">
                     <a href="#" class="nav-link">Postingan KU</a>
@@ -84,9 +86,16 @@
                 </div>
             </div>
         </nav>
-
+       
         <main class="py-4">
-            @yield('content')
+          @if (session('success'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Success! </strong>{{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>             
+        
+          @endif
+            @yield('content')           
         </main>
     </div>
 </body>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,11 +22,22 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::controller(PostController::class)->group(function(){
-  Route::get('/post/index','index');
-  Route::middleware(['auth'])->group(function(){
-    Route::get('/post/create','create')->name('postForm');
-    Route::post('/post/create', 'store')->name('postStore');
-    Route::post('/post/edit',[]);
+Route::prefix('post')->group(function(){
+  Route::controller(PostController::class)->group(function(){
+    Route::get('/index','index')->name('postIndex');
+    Route::get('/detail/{id}','detail')->name('postDetail');
+    Route::middleware(['auth'])->group(function(){
+      Route::get('/create','create')->name('postForm');
+      Route::post('/create', 'store')->name('postStore');
+      Route::post('/edit',[]);
+    });
+  });
+});
+
+Route::prefix('comment')->group(function(){
+  Route::controller(CommentController::class)->group(function(){
+    Route::middleware(['auth'])->group(function(){
+      Route::post('/create/{idPost}','store')->name('commentStore');
+    });
   });
 });

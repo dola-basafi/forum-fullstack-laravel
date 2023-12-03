@@ -6,6 +6,8 @@
 - run the command 
 - composer install
 - npm install
+- adjust the database and mailtrap data in the .env
+- php artisan migrate:fresh --seed
 - php artisan serve
 - npm run dev
 

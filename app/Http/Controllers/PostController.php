@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+  function detail($id){
+    $data = Post::with('user:id,name','comment.user:id,name')->withCount('like')->find($id);    
+    return view('post.detail',compact('data'));
+  }
   function index(){
     $data = Post::with('user:id,name','category:id,name')->get();
     return view('post.index',compact('data'));
