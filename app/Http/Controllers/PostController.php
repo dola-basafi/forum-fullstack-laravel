@@ -16,7 +16,7 @@ class PostController extends Controller
     $delete = Post::find($idPost);
     if ($delete) {
       if ($delete->user_id != $request->user()->id) {
-        $logInfo = $request->user()->username +" "+ "mencoba mengubah data yang bukan milikiknya";
+        $logInfo = $request->user()->username . " " . "mencoba mengubah data yang bukan milik nya";
         Log::info($logInfo);
         return redirect()->route('postIndex')->with('error', 'ada tidak punya akses untuk mengubah data ini');
       }
@@ -32,6 +32,11 @@ class PostController extends Controller
     if (!$data) {
       return redirect()->route('postIndex')->with('error', 'data ini tidak ada di database');
     }
+    if ($data->user_id != $request->user()->id) {
+      $logInfo = $request->user()->username . " " . "mencoba mengubah data yang bukan milik nya";
+      Log::info($logInfo);
+      return redirect()->route('postIndex')->with('error', 'ada tidak punya akses untuk mengubah data ini');
+    }
     $data->Datacategory = Category::all();
     return view('post.edit', compact('data'));
   }
@@ -43,16 +48,14 @@ class PostController extends Controller
   function detail($id, Request $request)
   {
 
-    $data = Post::with('user:id,name', 'comment.user:id,name','like.user:id,name')->withCount([
+    $data = Post::with('user:id,name', 'comment.user:id,name', 'like.user:id,name')->withCount([
       'like as likes_count' => function ($query) {
-          $query->where('like', 1); 
+        $query->where('like', 1);
       },
       'like as dislikes_count' => function ($query) {
-          $query->where('like', 2); 
+        $query->where('like', 2);
       }
-  ])->find($id);
-  
-   
+    ])->find($id);
     return view('post.detail', compact('data'));
   }
   function index()
@@ -83,7 +86,7 @@ class PostController extends Controller
     $post = Post::find($idPost);
     if ($post) {
       if ($post->user_id != $request->user()->id) {
-        $logInfo = $request->user()->username +" "+ "mencoba mengubah data yang bukan milikiknya";
+        $logInfo = $request->user()->username . " " . "mencoba mengubah data yang bukan milik nya";
         Log::info($logInfo);
         return redirect()->route('postIndex')->with('error', 'ada tidak punya akses untuk mengubah data ini');
       }

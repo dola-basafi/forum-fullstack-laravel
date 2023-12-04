@@ -27,7 +27,7 @@ class CommentController extends Controller
       return redirect()->route('postIndex')->with('error', 'data yang anda cari tidak di temukan');
     }
     if ($comment->user_id != $request->user()->id) {
-      $logInfo = $request->user()->username +" "+ "mencoba mengubah data yang bukan milikiknya";
+      $logInfo = $request->user()->username . "  " . "mencoba mengubah data yang bukan milik nya";
       Log::info($logInfo);
       return redirect()->route('postIndex')->with('error', 'ada tidak punya akses untuk mengubah data ini');
     }
@@ -48,7 +48,7 @@ class CommentController extends Controller
       
     }
     if ($delete->user_id != $request->user()->id) {
-      $logInfo = $request->user()->username +" "+ "mencoba mengubah data yang bukan milikiknya";
+      $logInfo = $request->user()->username . "  " . "mencoba mengubah data yang bukan milik nya";
       Log::info($logInfo);
       return redirect()->route('postIndex')->with('error', 'ada tidak punya akses untuk mengubah data ini');
     }

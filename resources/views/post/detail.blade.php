@@ -3,7 +3,8 @@
   <div class="container">
     <div class="card">
       <div class="card-body">
-        <h3 class="card-title">{{ $data->title }}</h3>
+        <h3 class="card-title">{{ $data->title }} <span class="float-end fs-6"> created at {{ $data->created_at }}</span>
+        </h3>
         <h6 class="card-subtitle">Create by <strong>{{ $data->user->name }}</strong> </h6>
         <p class="card-text">{{ $data->body }}</p>
         @auth
@@ -23,7 +24,10 @@
           <i class="bi bi-hand-thumbs-down"></i>
         @endguest
         <span class="ms-1">{{ $data->dislikes_count }}</span>
-
+        @auth
+            
+        <a href="{{ route('setReport',$data->id) }}" class="float-end"><i class="bi bi-flag me-1"></i>report</a>
+        @endauth
       </div>
     </div>
     @auth
@@ -53,23 +57,22 @@
           <p class="card-text">{{ $item->body }}</p>
           <p class="float-end">create by <strong> {{ $item->user->name }}</strong></p>
           @if (auth()->user()->id == $item->user->id)
-              
-          <div>
-            <div class="float-start me-2">
+            <div>
+              <div class="float-start me-2">
 
-              <form action="{{ route('commentDelete',["idPost"=>$data->id,"idComment"=>$item->id]) }}" method="post">
-                @csrf
-                @method('delete')
-              
-                <button class="btn btn-danger" type="submit">Delete</button>
-              </form>
+                <form action="{{ route('commentDelete', ['idPost' => $data->id, 'idComment' => $item->id]) }}" method="post">
+                  @csrf
+                  @method('delete')
+
+                  <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+              </div>
+
+              <button type="button" onclick="editComment({{ $item->id }},`{{ $item->body }}`)"
+                class="btn btn-info " data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Update
+              </button>
             </div>
-
-            <button type="button" onclick="editComment({{ $item->id }},`{{ $item->body }}`)"
-              class="btn btn-info " data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-              Update
-            </button>
-          </div>
           @endif
         </div>
       </div>

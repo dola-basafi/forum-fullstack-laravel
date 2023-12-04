@@ -42,6 +42,11 @@
             <li class="nav-item">
               <a href="{{ route('mypost') }}" class="nav-link">Postingan KU</a>
             </li>
+            @if (Auth::user()->role == 1)
+              <li class="nav-item">
+                <a href="{{ route('adminIndex') }}" class="nav-link">Admin</a>
+              </li>
+            @endif
           </ul>
         @endauth
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"

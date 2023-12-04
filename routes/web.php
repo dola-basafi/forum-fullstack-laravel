@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ReportController;
+use App\Http\Middleware\Role;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,10 +53,26 @@ Route::prefix('comment')->group(function(){
   });
 });
 
+Route::prefix('report')->group(function(){
+  Route::controller(ReportController::class)->group(function(){
+    Route::middleware(['auth'])->group(function(){
+      Route::get('/{idPost}','setReport')->name('setReport');
+    });
+  });
+});
+
 Route::prefix('like')->group(function(){
   Route::controller(LikeController::class)->group(function(){
     Route::middleware(['auth'])->group(function(){
       Route::get('/like/{id}/{like}','setLike')->name('like');
     });
+  });
+});
+
+Route::prefix('admin')->group(function(){
+  Route::middleware(['auth','Role:1'])->group(function(){
+    Route::get('/index',[AdminController::class,'index'])->name('adminIndex');
+    Route::get('/confirmasi/{idPost}',[AdminController::class,'confirm'])->name('reporConfirm');
+    Route::post('/delete/{idPost}',[AdminController::class,'destroy'])->name('reportDelete');
   });
 });
