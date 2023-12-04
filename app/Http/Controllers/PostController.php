@@ -43,7 +43,7 @@ class PostController extends Controller
   function detail($id, Request $request)
   {
 
-    $data = Post::with('user:id,name', 'comment.user:id,name')->withCount([
+    $data = Post::with('user:id,name', 'comment.user:id,name','like.user:id,name')->withCount([
       'like as likes_count' => function ($query) {
           $query->where('like', 1); 
       },
@@ -51,9 +51,9 @@ class PostController extends Controller
           $query->where('like', 2); 
       }
   ])->find($id);
-    $userLike= Like::where('user_id',$request->user()->id)->where('post_id',$id)->first();
+  
    
-    return view('post.detail', compact('data','userLike'));
+    return view('post.detail', compact('data'));
   }
   function index()
   {

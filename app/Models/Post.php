@@ -26,4 +26,7 @@ class Post extends Model
     public function like():HasMany{
       return $this->hasMany(Like::class);
     }
+    public function report():HasMany{
+      return $this->hasMany(Report::class);
+    }
 }
