@@ -7,6 +7,7 @@ use App\Models\Like;
 use App\Models\Post;
 use App\Models\Report;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -50,7 +51,7 @@ class PostController extends Controller
   function detail($id, Request $request)
   {
 
-    $data = Post::with('user:id,name', 'comment.user:id,name', 'like.user:id,name')->withCount([
+    $data = Post::with('user:id,name', 'comment.user:id,name', 'like.user:id,name','category:id,name')->withCount([
       'like as likes_count' => function ($query) {
         $query->where('like', 1);
       },
@@ -58,12 +59,16 @@ class PostController extends Controller
         $query->where('like', 2);
       }
     ])->find($id);
-    $reportStatus = Report::where('post_id',$id)->where('user_id',$request->user()->id)->first();
-    if ($reportStatus) {
-      $data->reportStatus = true;
-    }else{
-      $data->reportStatus = false;
+    if (Auth::check()) {
+      $reportStatus = Report::where('post_id',$id)->where('user_id',$request->user()->id)->first();
+      
+        if ($reportStatus) {
+          $data->reportStatus = true;
+        }else{
+          $data->reportStatus = false;
+        } 
     }
+    
     return view('post.detail', compact('data'));
   }
   

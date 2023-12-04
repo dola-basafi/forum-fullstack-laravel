@@ -6,7 +6,9 @@
         <h3 class="card-title">{{ $data->title }} <span class="float-end fs-6"> created at {{ $data->created_at }}</span>
         </h3>
         <h6 class="card-subtitle">Create by <strong>{{ $data->user->name }}</strong> </h6>
-        <p class="card-text">{{ $data->body }}</p>
+        <p class="card-text">{{ $data->body }} <span class="float-end">Category <strong>{{ $data->category->name }}</strong></span></p>
+        
+
         @auth
           <a href="{{ route('like', ['id' => $data->id, 'like' => 1]) }}" class="card-link "><i
               class="bi bi-hand-thumbs-up me-1"></i>like</a>

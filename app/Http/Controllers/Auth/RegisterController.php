@@ -56,6 +56,7 @@ class RegisterController extends Controller
             //tambahan
             'address' => ['required','string'],
             'phone' => ['required','numeric','unique:users'],
+            'username' => ['required','unique:users']
         ]);
     }
 
@@ -69,6 +70,7 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
+            'username' =>$data['username'],
             'email' => $data['email'],
             'address' =>$data['address'],
             'phone' => $data['phone'],
