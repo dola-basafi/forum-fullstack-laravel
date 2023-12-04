@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CommentController extends Controller
 {
@@ -26,6 +27,8 @@ class CommentController extends Controller
       return redirect()->route('postIndex')->with('error', 'data yang anda cari tidak di temukan');
     }
     if ($comment->user_id != $request->user()->id) {
+      $logInfo = $request->user()->username +" "+ "mencoba mengubah data yang bukan milikiknya";
+      Log::info($logInfo);
       return redirect()->route('postIndex')->with('error', 'ada tidak punya akses untuk mengubah data ini');
     }
     $validate = $request->validate([
@@ -45,6 +48,8 @@ class CommentController extends Controller
       
     }
     if ($delete->user_id != $request->user()->id) {
+      $logInfo = $request->user()->username +" "+ "mencoba mengubah data yang bukan milikiknya";
+      Log::info($logInfo);
       return redirect()->route('postIndex')->with('error', 'ada tidak punya akses untuk mengubah data ini');
     }
     $delete->delete();

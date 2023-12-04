@@ -7,6 +7,7 @@ use App\Models\Like;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class PostController extends Controller
 {
@@ -15,6 +16,8 @@ class PostController extends Controller
     $delete = Post::find($idPost);
     if ($delete) {
       if ($delete->user_id != $request->user()->id) {
+        $logInfo = $request->user()->username +" "+ "mencoba mengubah data yang bukan milikiknya";
+        Log::info($logInfo);
         return redirect()->route('postIndex')->with('error', 'ada tidak punya akses untuk mengubah data ini');
       }
     } else {
@@ -80,6 +83,8 @@ class PostController extends Controller
     $post = Post::find($idPost);
     if ($post) {
       if ($post->user_id != $request->user()->id) {
+        $logInfo = $request->user()->username +" "+ "mencoba mengubah data yang bukan milikiknya";
+        Log::info($logInfo);
         return redirect()->route('postIndex')->with('error', 'ada tidak punya akses untuk mengubah data ini');
       }
     } else {
