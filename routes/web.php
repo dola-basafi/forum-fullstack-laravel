@@ -72,7 +72,7 @@ Route::prefix('like')->group(function(){
 Route::prefix('admin')->group(function(){
   Route::middleware(['auth','Role:1'])->group(function(){
     Route::get('/index',[AdminController::class,'index'])->name('adminIndex');
-    Route::get('/confirmasi/{idPost}',[AdminController::class,'confirm'])->name('reporConfirm');
-    Route::post('/delete/{idPost}',[AdminController::class,'destroy'])->name('reportDelete');
+    Route::get('/confirmasi/{idPost}/{idUser}',[AdminController::class,'confirm'])->name('reporConfirm');
+    Route::post('/delete/{idPost}/{idUser}',[AdminController::class,'destroy'])->name('reportDelete');
   });
 });

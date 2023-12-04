@@ -20,7 +20,7 @@
             <td>{{ $item->user->name }}</td>
             <td>
               <a href="{{ route('postDetail',$item->id) }}" class="btn btn-info">Detail</a>
-              <a href="{{ route('reporConfirm',$item->id) }}" class="btn btn-danger">Delete</a>
+              <a href="{{ route('reporConfirm',['idPost'=>$item->id,'idUser' => $item->user_id]) }}" class="btn btn-danger">Delete</a>
             </td>
             <td>
               {{ $item->report_count }}
