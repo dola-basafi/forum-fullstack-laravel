@@ -10,6 +10,7 @@
             <th scope="col">Create By</th>
             <th scope="col">Action</th>
             <th scope="col">Jumlah Report</th>
+            <th scope="col">Data report</th>
           </tr>
         </thead>
         <tbody>
@@ -24,6 +25,9 @@
             </td>
             <td>
               {{ $item->report_count }}
+            </td>
+            <td>
+              <a href="{{ route('adminDetail',$item->id) }}" class="btn btn-info">Detail</a>
             </td>
           </tr>
           @endforeach

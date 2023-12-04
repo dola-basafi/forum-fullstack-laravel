@@ -56,7 +56,8 @@ Route::prefix('comment')->group(function(){
 Route::prefix('report')->group(function(){
   Route::controller(ReportController::class)->group(function(){
     Route::middleware(['auth'])->group(function(){
-      Route::get('/{idPost}','setReport')->name('setReport');
+      // Route::get('/{idPost}','setReport')->name('setReport');
+      Route::Post('/{idPost}','setReport')->name('setReport');
     });
   });
 });
@@ -71,6 +72,7 @@ Route::prefix('like')->group(function(){
 
 Route::prefix('admin')->group(function(){
   Route::middleware(['auth','Role:1'])->group(function(){
+    Route::get('/detail/{idPost}',[AdminController::class,'detail'])->name('adminDetail');
     Route::get('/index',[AdminController::class,'index'])->name('adminIndex');
     Route::get('/confirmasi/{idPost}/{idUser}',[AdminController::class,'confirm'])->name('reporConfirm');
     Route::post('/delete/{idPost}/{idUser}',[AdminController::class,'destroy'])->name('reportDelete');

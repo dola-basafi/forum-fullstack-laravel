@@ -13,9 +13,13 @@ class ReportController extends Controller
     if ($report) {
       return redirect()->back();
     }
+    if (!$request->user()->body) {
+      $request->user()->body = 'tidak ada';
+    }
     Report::create([
       'user_id' => $request->user()->id,
-      'post_id' => $idPost
+      'post_id' => $idPost,
+      'body' => $request->body,
     ]);
     return redirect()->route('postDetail', $idPost)->with('success', 'berhasil report');
   }

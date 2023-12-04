@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Like;
 use App\Models\Post;
+use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -57,6 +58,12 @@ class PostController extends Controller
         $query->where('like', 2);
       }
     ])->find($id);
+    $reportStatus = Report::where('post_id',$id)->where('user_id',$request->user()->id)->first();
+    if ($reportStatus) {
+      $data->reportStatus = true;
+    }else{
+      $data->reportStatus = false;
+    }
     return view('post.detail', compact('data'));
   }
   
@@ -109,7 +116,7 @@ class PostController extends Controller
   }
 
 
-  public function cachePost(){
+  function cachePost(){
     $data = Post::with('user:id,name', 'category:id,name')->get();
     RedisController::put('all_post',$data);
   }

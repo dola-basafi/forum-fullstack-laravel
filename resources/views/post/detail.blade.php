@@ -25,8 +25,14 @@
         @endguest
         <span class="ms-1">{{ $data->dislikes_count }}</span>
         @auth
-            
-        <a href="{{ route('setReport',$data->id) }}" class="float-end"><i class="bi bi-flag me-1"></i>report</a>
+        @if ($data->reportStatus)
+            <p class="float-end"><i class="bi bi-flag me-1"></i>report</p>
+        @else
+        <button  type="button" class="btn  float-end" data-bs-toggle="modal" data-bs-target="#reportModal">
+          <span><i class="bi bi-flag me-1"></i>report</span>
+        </button>
+        {{-- <a href="{{ route('setReport',$data->id) }}" class="float-end"><i class="bi bi-flag me-1"></i>report</a> --}}
+        @endif
         @endauth
       </div>
     </div>
@@ -84,7 +90,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Update Comment</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -110,11 +116,42 @@
       </div>
     </div>
   </div>
+  <!-- Modal report-->
+<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Alasan Report</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ route('setReport',$data->id) }}" name="formReport" method="post">
+          @csrf
+          <div class="form-floating">
+            <textarea class="form-control @error('body') is-invalid @enderror" placeholder="Leave a comment here" id="reportcomment"
+              name="body"></textarea>
+            @error('body')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+            @enderror
+            <label for="floatingTextarea">laporkan</label>
+            <button class="btn btn-primary mt-2">Report</button>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
   <script>
     function editComment(id, body) {
       let host = window.location.protocol + "//" + window.location.host + `/comment/update/{{ $data->id }}/${id}`;
       document.getElementById("updatecomment").value = body;
       document.formUpdateComment.action = host
     }
+    
   </script>
 @endsection
