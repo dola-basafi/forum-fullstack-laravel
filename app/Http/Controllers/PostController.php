@@ -24,6 +24,7 @@ class PostController extends Controller
       return redirect()->route('postIndex')->with('error', 'data yang anda cari tidak di temukan');
     }
     $delete->delete();
+    $this->cachePost();
     return redirect()->route('postIndex')->with('success', 'berhasil delete postingan');
   }
   function edit(Request $request, $idPost)
@@ -58,9 +59,10 @@ class PostController extends Controller
     ])->find($id);
     return view('post.detail', compact('data'));
   }
+  
   function index()
   {
-    $data = Post::with('user:id,name', 'category:id,name')->get();
+    $data = RedisController::get('all_post');
     return view('post.index', compact('data'));
   }
   function create()
@@ -79,6 +81,7 @@ class PostController extends Controller
     ]);
     $validate['user_id'] = $request->user()->id;
     Post::create($validate);
+    $this->cachePost();    
     return redirect()->route('home')->with('success', 'berhasil membuat post');
   }
   function update(Request $request, $idPost)
@@ -101,6 +104,13 @@ class PostController extends Controller
       'required' => ':attribute tidak boleh kosong'
     ]);
     $post->update($validate);
+    $this->cachePost();
     return redirect()->route('postIndex')->with('success', 'berhasil membuat post');
+  }
+
+
+  public function cachePost(){
+    $data = Post::with('user:id,name', 'category:id,name')->get();
+    RedisController::put('all_post',$data);
   }
 }

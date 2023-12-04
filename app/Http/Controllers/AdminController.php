@@ -35,6 +35,8 @@ class AdminController extends Controller
     dispatch(new SendReportMail($user->email,$user->name,$request->body));
     
     $delete->delete();
+
+    // RedisController
     return redirect()->route('postIndex')->with('success', 'berhasil delete postingan');
   }
 }
